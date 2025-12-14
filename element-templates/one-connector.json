@@ -1,12 +1,12 @@
 {
   "$schema" : "https://unpkg.com/@camunda/zeebe-element-templates-json-schema/resources/schema.json",
-  "name" : "Template connector v2",
-  "id" : "io.camunda.connector.Template.v2",
-  "description" : "Describe this connector",
+  "name" : "One Connector (REST)",
+  "id" : "io.camunda.connector.One.v1",
+  "description" : "Generic REST Connector with JSON support",
   "metadata" : {
     "keywords" : [ ]
   },
-  "documentationRef" : "https://docs.camunda.io/docs/components/connectors/out-of-the-box-connectors/available-connectors-overview/",
+  "documentationRef" : "https://docs.camunda.io",
   "version" : 1,
   "category" : {
     "id" : "connectors",
@@ -17,8 +17,8 @@
     "value" : "bpmn:ServiceTask"
   },
   "groups" : [ {
-    "id" : "operation",
-    "label" : "Operation"
+    "id" : "request",
+    "label" : "Request Config"
   }, {
     "id" : "connector",
     "label" : "Connector"
@@ -33,127 +33,60 @@
     "label" : "Retries"
   } ],
   "properties" : [ {
-    "value" : "io.camunda:template:2",
+    "value" : "io.camunda:one-connector:1",
     "binding" : {
       "property" : "type",
       "type" : "zeebe:taskDefinition"
     },
     "type" : "Hidden"
   }, {
-    "id" : "operation",
-    "label" : "Operation",
-    "description" : "The operation to execute",
-    "value" : "addTwoNumbers",
-    "group" : "operation",
-    "binding" : {
-      "key" : "operation",
-      "type" : "zeebe:taskHeader"
-    },
-    "type" : "Dropdown",
-    "choices" : [ {
-      "name" : "add two numbers",
-      "value" : "addTwoNumbers"
-    }, {
-      "name" : "send back message",
-      "value" : "sendBackMessage"
-    } ]
-  }, {
-    "id" : "addTwoNumbers:A",
-    "label" : "A",
-    "group" : "operation",
-    "binding" : {
-      "name" : "A",
-      "type" : "zeebe:input"
-    },
-    "condition" : {
-      "allMatch" : [ {
-        "property" : "operation",
-        "equals" : "addTwoNumbers",
-        "type" : "simple"
-      } ]
-    },
-    "type" : "Number"
-  }, {
-    "id" : "addTwoNumbers:B",
-    "label" : "B",
-    "group" : "operation",
-    "binding" : {
-      "name" : "B",
-      "type" : "zeebe:input"
-    },
-    "condition" : {
-      "allMatch" : [ {
-        "property" : "operation",
-        "equals" : "addTwoNumbers",
-        "type" : "simple"
-      } ]
-    },
-    "type" : "Number"
-  }, {
-    "id" : "sendBackMessage:message",
-    "label" : "Message",
+    "id" : "url",
+    "label" : "URL",
+    "description" : "Target URL",
     "optional" : false,
-    "constraints" : {
-      "notEmpty" : true
-    },
     "feel" : "optional",
-    "group" : "operation",
+    "group" : "request",
     "binding" : {
-      "name" : "message",
+      "name" : "url",
       "type" : "zeebe:input"
     },
-    "condition" : {
-      "allMatch" : [ {
-        "property" : "operation",
-        "equals" : "sendBackMessage",
-        "type" : "simple"
-      } ]
+    "type" : "String"
+  }, {
+    "id" : "method",
+    "label" : "Method",
+    "description" : "HTTP Method (GET, POST, etc.)",
+    "optional" : false,
+    "value" : "GET",
+    "feel" : "optional",
+    "group" : "request",
+    "binding" : {
+      "name" : "method",
+      "type" : "zeebe:input"
+    },
+    "type" : "String"
+  }, {
+    "id" : "headers",
+    "label" : "Headers",
+    "optional" : true,
+    "feel" : "optional",
+    "group" : "request",
+    "binding" : {
+      "name" : "headers",
+      "type" : "zeebe:input"
+    },
+    "type" : "String"
+  }, {
+    "id" : "body",
+    "label" : "Request Body",
+    "description" : "JSON payload or FEEL expression",
+    "optional" : true,
+    "feel" : "optional",
+    "group" : "request",
+    "binding" : {
+      "name" : "body",
+      "type" : "zeebe:input"
     },
     "type" : "Text"
-  }, {
-    "id" : "sendBackMessage:authentication.user",
-    "label" : "Username",
-    "description" : "The username for authentication",
-    "optional" : false,
-    "constraints" : {
-      "notEmpty" : true
-    },
-    "feel" : "optional",
-    "group" : "operation",
-    "binding" : {
-      "name" : "authentication.user",
-      "type" : "zeebe:input"
-    },
-    "condition" : {
-      "allMatch" : [ {
-        "property" : "operation",
-        "equals" : "sendBackMessage",
-        "type" : "simple"
-      } ]
-    },
-    "type" : "String"
-  }, {
-    "id" : "sendBackMessage:authentication.token",
-    "label" : "Token",
-    "description" : "The token for authentication",
-    "optional" : false,
-    "constraints" : {
-      "notEmpty" : true
-    },
-    "feel" : "optional",
-    "group" : "operation",
-    "binding" : {
-      "name" : "authentication.token",
-      "type" : "zeebe:input"
-    },
-    "condition" : {
-      "allMatch" : [ {
-        "property" : "operation",
-        "equals" : "sendBackMessage",
-        "type" : "simple"
-      } ]
-    },
-    "type" : "String"
   }, {
     "id" : "version",
     "label" : "Version",
@@ -169,7 +102,7 @@
     "id" : "id",
     "label" : "ID",
     "description" : "ID of the element template",
-    "value" : "io.camunda.connector.Template.v2",
+    "value" : "io.camunda.connector.One.v1",
     "group" : "connector",
     "binding" : {
       "key" : "elementTemplateId",
