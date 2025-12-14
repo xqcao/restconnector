@@ -102,7 +102,6 @@
       <version>${version.camunda}</version>
       <scope>test</scope>
     </dependency>
-
   </dependencies>
 
   <build>

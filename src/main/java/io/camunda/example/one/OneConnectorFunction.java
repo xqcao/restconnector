@@ -43,6 +43,7 @@ public class OneConnectorFunction implements OutboundConnectorFunction {
 
     @Override
     public Object execute(OutboundConnectorContext context) throws Exception {
+
         final var connectorInput = context.bindVariables(OneConnectorInput.class);
         return executeConnector(connectorInput);
     }
